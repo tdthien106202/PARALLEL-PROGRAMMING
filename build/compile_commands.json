@@ -1,0 +1,80 @@
+[
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/demo.dir/includes_CXX.rsp -g -o CMakeFiles\\demo.dir\\demo.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\demo.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/demo.cc",
+  "output": "CMakeFiles/demo.dir/demo.cc.obj"
+},
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/MiniDNNLib.dir/includes_CXX.rsp -g -o CMakeFiles\\MiniDNNLib.dir\\mnist.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\src\\mnist.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/src/mnist.cc",
+  "output": "src/CMakeFiles/MiniDNNLib.dir/mnist.cc.obj"
+},
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/MiniDNNLib.dir/includes_CXX.rsp -g -o CMakeFiles\\MiniDNNLib.dir\\network.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\src\\network.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/src/network.cc",
+  "output": "src/CMakeFiles/MiniDNNLib.dir/network.cc.obj"
+},
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/MiniDNNLib.dir/includes_CXX.rsp -g -o CMakeFiles\\MiniDNNLib.dir\\layer\\ave_pooling.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\src\\layer\\ave_pooling.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/src/layer/ave_pooling.cc",
+  "output": "src/CMakeFiles/MiniDNNLib.dir/layer/ave_pooling.cc.obj"
+},
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/MiniDNNLib.dir/includes_CXX.rsp -g -o CMakeFiles\\MiniDNNLib.dir\\layer\\conv.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\src\\layer\\conv.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/src/layer/conv.cc",
+  "output": "src/CMakeFiles/MiniDNNLib.dir/layer/conv.cc.obj"
+},
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/MiniDNNLib.dir/includes_CXX.rsp -g -o CMakeFiles\\MiniDNNLib.dir\\layer\\fully_connected.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\src\\layer\\fully_connected.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/src/layer/fully_connected.cc",
+  "output": "src/CMakeFiles/MiniDNNLib.dir/layer/fully_connected.cc.obj"
+},
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/MiniDNNLib.dir/includes_CXX.rsp -g -o CMakeFiles\\MiniDNNLib.dir\\layer\\max_pooling.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\src\\layer\\max_pooling.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/src/layer/max_pooling.cc",
+  "output": "src/CMakeFiles/MiniDNNLib.dir/layer/max_pooling.cc.obj"
+},
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/MiniDNNLib.dir/includes_CXX.rsp -g -o CMakeFiles\\MiniDNNLib.dir\\layer\\relu.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\src\\layer\\relu.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/src/layer/relu.cc",
+  "output": "src/CMakeFiles/MiniDNNLib.dir/layer/relu.cc.obj"
+},
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/MiniDNNLib.dir/includes_CXX.rsp -g -o CMakeFiles\\MiniDNNLib.dir\\layer\\sigmoid.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\src\\layer\\sigmoid.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/src/layer/sigmoid.cc",
+  "output": "src/CMakeFiles/MiniDNNLib.dir/layer/sigmoid.cc.obj"
+},
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/MiniDNNLib.dir/includes_CXX.rsp -g -o CMakeFiles\\MiniDNNLib.dir\\layer\\softmax.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\src\\layer\\softmax.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/src/layer/softmax.cc",
+  "output": "src/CMakeFiles/MiniDNNLib.dir/layer/softmax.cc.obj"
+},
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/MiniDNNLib.dir/includes_CXX.rsp -g -o CMakeFiles\\MiniDNNLib.dir\\loss\\cross_entropy_loss.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\src\\loss\\cross_entropy_loss.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/src/loss/cross_entropy_loss.cc",
+  "output": "src/CMakeFiles/MiniDNNLib.dir/loss/cross_entropy_loss.cc.obj"
+},
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/MiniDNNLib.dir/includes_CXX.rsp -g -o CMakeFiles\\MiniDNNLib.dir\\loss\\mse_loss.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\src\\loss\\mse_loss.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/src/loss/mse_loss.cc",
+  "output": "src/CMakeFiles/MiniDNNLib.dir/loss/mse_loss.cc.obj"
+},
+{
+  "directory": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/MiniDNNLib.dir/includes_CXX.rsp -g -o CMakeFiles\\MiniDNNLib.dir\\optimizer\\sgd.cc.obj -c C:\\HCMUS\\4th\\HKI\\PP\\Final\\mini-dnn-cpp\\src\\optimizer\\sgd.cc",
+  "file": "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/src/optimizer/sgd.cc",
+  "output": "src/CMakeFiles/MiniDNNLib.dir/optimizer/sgd.cc.obj"
+}
+]
