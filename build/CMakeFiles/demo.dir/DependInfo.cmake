@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/demo.cc" "CMakeFiles/demo.dir/demo.cc.obj" "gcc" "CMakeFiles/demo.dir/demo.cc.obj.d"
+  "/Users/trinhthien/DThien/HK1-2023/Lập trình song song/Projects/mini-dnn-cpp/demo.cc" "CMakeFiles/demo.dir/demo.cc.o" "gcc" "CMakeFiles/demo.dir/demo.cc.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

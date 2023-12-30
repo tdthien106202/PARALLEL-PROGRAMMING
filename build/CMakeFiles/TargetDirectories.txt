@@ -1,6 +1,6 @@
-C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/CMakeFiles/demo.dir
-C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/CMakeFiles/edit_cache.dir
-C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/CMakeFiles/rebuild_cache.dir
-C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src/CMakeFiles/MiniDNNLib.dir
-C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src/CMakeFiles/edit_cache.dir
-C:/HCMUS/4th/HKI/PP/Final/mini-dnn-cpp/build/src/CMakeFiles/rebuild_cache.dir
+/Users/trinhthien/DThien/HK1-2023/Lập trình song song/Projects/mini-dnn-cpp/build/CMakeFiles/demo.dir
+/Users/trinhthien/DThien/HK1-2023/Lập trình song song/Projects/mini-dnn-cpp/build/CMakeFiles/edit_cache.dir
+/Users/trinhthien/DThien/HK1-2023/Lập trình song song/Projects/mini-dnn-cpp/build/CMakeFiles/rebuild_cache.dir
+/Users/trinhthien/DThien/HK1-2023/Lập trình song song/Projects/mini-dnn-cpp/build/src/CMakeFiles/MiniDNNLib.dir
+/Users/trinhthien/DThien/HK1-2023/Lập trình song song/Projects/mini-dnn-cpp/build/src/CMakeFiles/edit_cache.dir
+/Users/trinhthien/DThien/HK1-2023/Lập trình song song/Projects/mini-dnn-cpp/build/src/CMakeFiles/rebuild_cache.dir
