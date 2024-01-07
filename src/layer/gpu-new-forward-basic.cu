@@ -1,24 +1,185 @@
+// #include <cmath>
+// #include <iostream>
+// #include "gpu-new-forward.h"
+
+// #define cudaErrChk(stmt) \
+//   { cudaAssert((stmt), __FILE__, __LINE__); }
+
+// inline void cudaAssert(cudaError_t error,
+//                        const char* file,
+//                        int line,
+//                        bool abort = true) {
+//   if (error != cudaSuccess) {
+//     std::cerr << "CUDA error: "
+//               << cudaGetErrorString(error) << ' ' << file << ':' << line << std::endl;
+//     if (abort) {
+//       exit(error);
+//     }
+//   }
+// }
+
+// #define TILE_WIDTH 16
+
+// __global__ void conv_forward_kernel(float *y, 
+//                                     const float *x, 
+//                                     const float *k, 
+//                                     const int B, 
+//                                     const int M, 
+//                                     const int C, 
+//                                     const int H, 
+//                                     const int W, 
+//                                     const int K)
+// {
+// 	// Calculate output dimensions
+//     const int H_out = H - K + 1;
+//     const int W_out = W - K + 1;
+
+//     // An example use of these macros:
+//     // float a = y4d(0,0,0,0)
+//     // y4d(0,0,0,0) = a
+// #define y4d(i3, i2, i1, i0) y[(i3) * (M * H_out * W_out) + (i2) * (H_out * W_out) + (i1) * (W_out) + i0]
+// #define x4d(i3, i2, i1, i0) x[(i3) * (C * H * W) + (i2) * (H * W) + (i1) * (W) + i0]
+// #define k4d(i3, i2, i1, i0) k[(i3) * (C * K * K) + (i2) * (K * K) + (i1) * (K) + i0]
+
+
+// 	// Calculate grid dimensions for parallelization
+//     int H_grid = ceil(1.0*H_out / TILE_WIDTH);
+//     int W_grid = ceil(1.0*W_out / TILE_WIDTH); 
+    
+// 	// Extract thread indices
+//     int b = blockIdx.x;                 // batch number
+//     int m = blockIdx.y;                 // output feature map
+//     int h = (blockIdx.z / W_grid) * TILE_WIDTH + threadIdx.y; // row of image matrix
+//     int w = (blockIdx.z % W_grid) * TILE_WIDTH + threadIdx.x; // col of image matrix
+    
+// 	// Param for convolution result
+//     float accum = 0.0f;
+// 	// Perform convolution by summing over input features and applying the filter
+//     if ((h < (H_out)) && (w < (W_out))) 
+//     {
+//         float accum = 0.0f;
+//         for(int c=0; c<C; c++)             // sum over all input features
+//         {
+//             for(int p=0; p<K; p++)         // KxK filter 
+//                 for(int q=0; q<K; q++)
+//                     accum += x4d(b, c, h+p, w+q) * k4d(m, c, p, q); // 4 dimensions macro resolve thread index
+//         }
+// 		// Store the result in the output array
+//         y4d(b,m,h,w) = accum;
+//     }
+// 	// Undefine macros to avoid potential conflicts
+// #undef y4d
+// #undef x4d
+// #undef k4d
+// }
+	
+// __host__ void GPUInterface::conv_forward_gpu_prolog(const float *host_y, 
+//                                                     const float *host_x, 
+//                                                     const float *host_k, 
+//                                                     float **device_y_ptr, 
+//                                                     float **device_x_ptr, 
+//                                                     float **device_k_ptr, 
+//                                                     const int B, 
+//                                                     const int M, 
+//                                                     const int C, 
+//                                                     const int H, 
+//                                                     const int W, 
+//                                                     const int K)
+// {
+//     // Allocate memory and copy data to GPU(device)
+
+//     // We pass double pointers for you to initialize the relevant device pointers,
+//     // which are passed to the other two functions.
+
+//     const int H_out = H - K + 1;
+//     const int W_out = W - K + 1;
+
+//     const int inputSize  = B * C * H * W * sizeof(float);  // input features map C
+//     const int outputSize = B * M * H_out * W_out * sizeof(float); // output feature map M
+//     const int filterSize = M * C * K * K * sizeof(float); // C * M filter Maps of size K*K
+
+//     cudaMalloc((void **) device_x_ptr, inputSize);
+//     cudaMalloc((void **) device_y_ptr, outputSize);
+//     cudaMalloc((void **) device_k_ptr, filterSize);
+
+//     // Copy input data to device
+//     cudaMemcpy(*device_x_ptr, host_x, inputSize, cudaMemcpyHostToDevice);
+//     // Copy filter size to device
+//     cudaMemcpy(*device_k_ptr, host_k, filterSize, cudaMemcpyHostToDevice);
+
+// }
+
+
+// __host__ void GPUInterface::conv_forward_gpu(float *device_y, 
+//                                              const float *device_x, 
+//                                              const float *device_k, 
+//                                              const int B, 
+//                                              const int M, 
+//                                              const int C, 
+//                                              const int H, 
+//                                              const int W, 
+//                                              const int K)
+// {
+//     // Set the kernel dimensions and call the kernel
+
+//     const int H_out = H - K + 1;
+//     const int W_out = W - K + 1;
+
+//     const int H_grid = ceil(1.0*H_out / TILE_WIDTH);
+//     int W_grid = ceil(1.0*W_out / TILE_WIDTH);
+//     int Z = H_grid * W_grid;
+
+//     // Block dimensions = #of threads in the block
+//     dim3 numThreadsPerBlock(TILE_WIDTH, TILE_WIDTH, 1);
+
+//     // Grid Dimension = #of Blocks: Batch Size(B) * Number of Output Features(M) * Calculated gridsize(Z)
+//     dim3 numBlocksInGrid(B, M, Z);
+
+
+//     // launch the kernel
+//     conv_forward_kernel<<<numBlocksInGrid, numThreadsPerBlock>>>(device_y, device_x, device_k, B, M, C, H, W, K);
+// }
+
+
+// __host__ void GPUInterface::conv_forward_gpu_epilog(float *host_y, 
+//                                                     float *device_y, 
+//                                                     float *device_x, 
+//                                                     float *device_k, 
+//                                                     const int B, 
+//                                                     const int M, 
+//                                                     const int C, 
+//                                                     const int H, 
+//                                                     const int W, 
+//                                                     const int K)
+// {
+//     // Copy the output from device back to host
+    
+//     const int H_out = H - K + 1;
+//     const int W_out = W - K + 1;
+
+//     int outputSize = B * M * H_out * W_out * sizeof(float);
+
+//     cudaMemcpy(host_y, device_y, outputSize, cudaMemcpyDeviceToHost);
+
+//     // Free device memory
+//     cudaFree(device_x);
+//     cudaFree(device_y);
+//     cudaFree(device_k);
+// }
+
 #include <cmath>
 #include <iostream>
 #include "gpu-new-forward.h"
 
-#define cudaErrChk(stmt) \
-  { cudaAssert((stmt), __FILE__, __LINE__); }
+#define BLOCK_SIZE 32
 
-inline void cudaAssert(cudaError_t error,
-                       const char* file,
-                       int line,
-                       bool abort = true) {
-  if (error != cudaSuccess) {
-    std::cerr << "CUDA error: "
-              << cudaGetErrorString(error) << ' ' << file << ':' << line << std::endl;
-    if (abort) {
-      exit(error);
+#define errCheck(ans) { checkError((ans), __FILE__, __LINE__); }
+inline void checkError(cudaError_t err, const char * file, int line, bool abort = true) {
+    if (err != cudaSuccess) {
+        fprintf(stderr, "GPU Error: %s --> %s:%d\n", cudaGetErrorString(err), file, line);
+        if (abort) exit(err);
     }
-  }
 }
-
-#define TILE_WIDTH 16
 
 __global__ void conv_forward_kernel(float *y, 
                                     const float *x, 
@@ -30,141 +191,135 @@ __global__ void conv_forward_kernel(float *y,
                                     const int W, 
                                     const int K)
 {
-	// Calculate output dimensions
+    /*
+    Modify this function to implement the forward pass described in Chapter 16.
+    We have added an additional dimension to the tensors to support an entire mini-batch
+    The goal here is to be correct AND fast.
+
+    Function paramter definitions:
+    y - output
+    x - input
+    k - kernel
+    B - batch_size (number of images in x)
+    M - number of output feature maps
+    C - number of input feature maps
+    H - input height dimension
+    W - input width dimension
+    K - kernel height and width (K x K)
+    */
+
     const int H_out = H - K + 1;
     const int W_out = W - K + 1;
+    //(void)H_out; // silence declared but never referenced warning. remove this line when you start working
+    //(void)W_out; // silence declared but never referenced warning. remove this line when you start working
 
+    // We have some nice #defs for you below to simplify indexing. Feel free to use them, or create your own.
     // An example use of these macros:
     // float a = y4d(0,0,0,0)
     // y4d(0,0,0,0) = a
+
 #define y4d(i3, i2, i1, i0) y[(i3) * (M * H_out * W_out) + (i2) * (H_out * W_out) + (i1) * (W_out) + i0]
 #define x4d(i3, i2, i1, i0) x[(i3) * (C * H * W) + (i2) * (H * W) + (i1) * (W) + i0]
 #define k4d(i3, i2, i1, i0) k[(i3) * (C * K * K) + (i2) * (K * K) + (i1) * (K) + i0]
 
+    // Insert your GPU convolution kernel code here
+    int W_grid = ceil(1.0 * W / BLOCK_SIZE);
+    int m = blockIdx.x;
+    int h = (blockIdx.y / W_grid) * BLOCK_SIZE + threadIdx.y;
+    int w = (blockIdx.y % W_grid) * BLOCK_SIZE + threadIdx.x;
 
-	// Calculate grid dimensions for parallelization
-    int H_grid = ceil(1.0*H_out / TILE_WIDTH);
-    int W_grid = ceil(1.0*W_out / TILE_WIDTH); 
-    
-	// Extract thread indices
-    int b = blockIdx.x;                 // batch number
-    int m = blockIdx.y;                 // output feature map
-    int h = (blockIdx.z / W_grid) * TILE_WIDTH + threadIdx.y; // row of image matrix
-    int w = (blockIdx.z % W_grid) * TILE_WIDTH + threadIdx.x; // col of image matrix
-    
-	// Param for convolution result
-    float accum = 0.0f;
-	// Perform convolution by summing over input features and applying the filter
-    if ((h < (H_out)) && (w < (W_out))) 
-    {
-        float accum = 0.0f;
-        for(int c=0; c<C; c++)             // sum over all input features
-        {
-            for(int p=0; p<K; p++)         // KxK filter 
-                for(int q=0; q<K; q++)
-                    accum += x4d(b, c, h+p, w+q) * k4d(m, c, p, q); // 4 dimensions macro resolve thread index
+    int b = blockIdx.z;
+
+    float acc = 0.0f;
+
+    for (int c = 0; c < C; c++) {               // Sum over all input channels/feature maps
+        for (int p = 0; p < K; p++) {           // Loop over KxK filter
+            for (int q = 0; q < K; q++) {
+                acc += x4d(b, c, h + p, w + q) * k4d(m, c, p, q);
+            }
         }
-		// Store the result in the output array
-        y4d(b,m,h,w) = accum;
     }
-	// Undefine macros to avoid potential conflicts
+
+    if (h < H_out && w < W_out) {
+        y4d(b, m, h, w) = acc;
+    }
+
 #undef y4d
 #undef x4d
 #undef k4d
 }
+
 	
-__host__ void GPUInterface::conv_forward_gpu_prolog(const float *host_y, 
-                                                    const float *host_x, 
-                                                    const float *host_k, 
-                                                    float **device_y_ptr, 
-                                                    float **device_x_ptr, 
-                                                    float **device_k_ptr, 
-                                                    const int B, 
-                                                    const int M, 
-                                                    const int C, 
-                                                    const int H, 
-                                                    const int W, 
-                                                    const int K)
+__host__ void GPUInterface::conv_forward_gpu_prolog(const float *host_y, const float *host_x, const float *host_k, float **device_y_ptr, float **device_x_ptr, float **device_k_ptr, const int B, const int M, const int C, const int H, const int W, const int K)
 {
-    // Allocate memory and copy data to GPU(device)
-    printf("(B=%d, M=%d, C=%d, H=%d, W=%d, K=%d)\n", B, M, C, H, W, K);
+    // Allocate memory and copy over the relevant data structures to the GPU
 
     // We pass double pointers for you to initialize the relevant device pointers,
-    // which are passed to the other two functions.
+    //  which are passed to the other two functions.
+
+    // Useful snippet for error checking
+    cudaError_t error = cudaGetLastError();
+    if(error != cudaSuccess)
+    {
+        std::cout<<"CUDA error: "<<cudaGetErrorString(error)<<std::endl;
+        exit(-1);
+    }
 
     const int H_out = H - K + 1;
     const int W_out = W - K + 1;
 
-    const int inputSize  = B * C * H * W * sizeof(float);  // input features map C
-    const int outputSize = B * M * H_out * W_out * sizeof(float); // output feature map M
-    const int filterSize = M * C * K * K * sizeof(float); // C * M filter Maps of size K*K
+    int outputSize = B * M * H_out * W_out;
+    int inputSize = B * C * H * W;
+    int kernelSize = M * C * K * K;
 
-    cudaMalloc((void **) device_x_ptr, inputSize);
-    cudaMalloc((void **) device_y_ptr, outputSize);
-    cudaMalloc((void **) device_k_ptr, filterSize);
+    // Allocate Output Array
+    errCheck(cudaMalloc((void **) device_y_ptr, outputSize * sizeof(float)));
 
-    // Copy input data to device
-    cudaMemcpy(*device_x_ptr, host_x, inputSize, cudaMemcpyHostToDevice);
-    // Copy filter size to device
-    cudaMemcpy(*device_k_ptr, host_k, filterSize, cudaMemcpyHostToDevice);
+    // Allocate Input Array
+    errCheck(cudaMalloc((void **) device_x_ptr, inputSize * sizeof(float)));
 
+    // Allocate Kernel Filter Array
+    errCheck(cudaMalloc((void **) device_k_ptr, kernelSize * sizeof(float)));
+
+    // Copy Output Array to Device
+    errCheck(cudaMemcpy(*device_y_ptr, host_y, outputSize * sizeof(float), cudaMemcpyHostToDevice));
+
+    // Copy Input Array to Device
+    errCheck(cudaMemcpy(*device_x_ptr, host_x, inputSize * sizeof(float), cudaMemcpyHostToDevice));
+
+    // Copy Kernel Array to Device
+    errCheck(cudaMemcpy(*device_k_ptr, host_k, kernelSize * sizeof(float), cudaMemcpyHostToDevice));
 }
 
 
-__host__ void GPUInterface::conv_forward_gpu(float *device_y, 
-                                             const float *device_x, 
-                                             const float *device_k, 
-                                             const int B, 
-                                             const int M, 
-                                             const int C, 
-                                             const int H, 
-                                             const int W, 
-                                             const int K)
+__host__ void GPUInterface::conv_forward_gpu(float *device_y, const float *device_x, const float *device_k, const int B, const int M, const int C, const int H, const int W, const int K)
 {
     // Set the kernel dimensions and call the kernel
+    int W_grid = ceil(1.0 * W / BLOCK_SIZE);    // Number of horizontal tiles for output maps
+    int H_grid = ceil(1.0 * H / BLOCK_SIZE);    // Numer of vertical tiles for output maps
 
-    const int H_out = H - K + 1;
-    const int W_out = W - K + 1;
+    int Y_grid = H_grid * W_grid;   // Y-Dimension of the grid
 
-    const int H_grid = ceil(1.0*H_out / TILE_WIDTH);
-    int W_grid = ceil(1.0*W_out / TILE_WIDTH);
-    int Z = H_grid * W_grid;
+    dim3 blockDim(BLOCK_SIZE, BLOCK_SIZE, 1);
+    dim3 gridDim(M, Y_grid, B);
 
-    // Block dimensions = #of threads in the block
-    dim3 numThreadsPerBlock(TILE_WIDTH, TILE_WIDTH, 1);
-
-    // Grid Dimension = #of Blocks: Batch Size(B) * Number of Output Features(M) * Calculated gridsize(Z)
-    dim3 numBlocksInGrid(B, M, Z);
-
-
-    // launch the kernel
-    conv_forward_kernel<<<numBlocksInGrid, numThreadsPerBlock>>>(device_y, device_x, device_k, B, M, C, H, W, K);
+    conv_forward_kernel<<<gridDim, blockDim>>>(device_y, device_x, device_k, B, M, C, H, W, K);
+    errCheck(cudaPeekAtLastError());
 }
 
 
-__host__ void GPUInterface::conv_forward_gpu_epilog(float *host_y, 
-                                                    float *device_y, 
-                                                    float *device_x, 
-                                                    float *device_k, 
-                                                    const int B, 
-                                                    const int M, 
-                                                    const int C, 
-                                                    const int H, 
-                                                    const int W, 
-                                                    const int K)
+__host__ void GPUInterface::conv_forward_gpu_epilog(float *host_y, float *device_y, float *device_x, float *device_k, const int B, const int M, const int C, const int H, const int W, const int K)
 {
-    // Copy the output from device back to host
-    
     const int H_out = H - K + 1;
     const int W_out = W - K + 1;
 
-    int outputSize = B * M * H_out * W_out * sizeof(float);
+    int outputSize = B * M * H_out * W_out;
 
-    cudaMemcpy(host_y, device_y, outputSize, cudaMemcpyDeviceToHost);
+    // Copy the output back to host
+    errCheck(cudaMemcpy(host_y, device_y, outputSize * sizeof(float), cudaMemcpyDeviceToHost));
 
     // Free device memory
-    cudaFree(device_x);
-    cudaFree(device_y);
-    cudaFree(device_k);
+    errCheck(cudaFree(device_y));
+    errCheck(cudaFree(device_x));
+    errCheck(cudaFree(device_k));
 }
-

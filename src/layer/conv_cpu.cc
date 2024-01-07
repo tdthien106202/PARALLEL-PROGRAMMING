@@ -1,6 +1,6 @@
 #include "conv_cpu.h"
 
-void conv_forward_cpu(float* y,
+void conv_forward_cpu_1(float* y,
                       const float* x,
                       const float* k,
                       const int B,
